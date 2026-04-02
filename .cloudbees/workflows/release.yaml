@@ -1,6 +1,6 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
-name: My workflow
+name: Banking App Release
 on:
   workflow_dispatch:
     inputs:
@@ -10,9 +10,9 @@ on:
         description: This is a system-generated parameter and is required for use in application releases. Refer to https://docs.cloudbees.com/docs/cloudbees-platform/latest/applications/releases#manifest for the expected format
 metadata:
   stages/v1alpha1:
-    - name: dev
+    - name: qa
       jobs:
-        - dev
+        - qa
     - name: staging
       jobs:
         - staging
@@ -20,15 +20,15 @@ metadata:
       jobs:
         - prod
 jobs:
-  dev:
-    environment: dev
+  qa:
+    environment: qa
     uses: ./.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
       environment: ${{ job.environment }}
   staging:
     needs:
-      - dev
+      - qa
     environment: staging
     uses: ./.cloudbees/workflows/deployer.yaml
     with:
