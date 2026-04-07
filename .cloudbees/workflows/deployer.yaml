@@ -18,3 +18,4 @@ jobs:
     with:
       artifact-id: ${{ fromJSON(inputs.manifest)['banking-app']['tejasdesai27/banking-app'].id }}
       environment: ${{ inputs.environment }}
+      artifact-url: ${{ fromJSON(inputs.manifest)['banking-app']['tejasdesai27/banking-app'].url }}
