@@ -25,18 +25,18 @@ jobs:
     uses: ./.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
-      environment: ${{ job.environment }}
+      environment: staging
     secrets: inherit
   prod:
     needs: staging
     uses: ./.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
-      environment: ${{ job.environment }}
+      environment: prod
     secrets: inherit
   qa:
     uses: ./.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
-      environment: ${{ job.environment }}
+      environment: qa
     secrets: inherit
