@@ -16,6 +16,7 @@ metadata:
     - name: staging
       jobs:
         - staging
+        - manual
     - name: prod
       jobs:
         - prod
@@ -28,7 +29,7 @@ jobs:
       environment: staging
     secrets: inherit
   prod:
-    needs: staging
+    needs: manual
     uses: ./.cloudbees/workflows/deployer.yaml
     with:
       manifest: ${{ inputs.manifest }}
@@ -40,3 +41,12 @@ jobs:
       manifest: ${{ inputs.manifest }}
       environment: qa
     secrets: inherit
+  manual:
+    needs:
+      - staging
+    timeout-minutes: 4320
+    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
+    with:
+      disallowLaunchByUser: false
+      notifyAllEligibleUsers: false
+      approvers: 60e87186-20ec-11f1-8413-42010a83aef9
